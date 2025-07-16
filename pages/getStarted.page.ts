@@ -8,11 +8,7 @@ export class GetStartedPage {
     readonly companyNameField: Locator;
     readonly emailField: Locator;
     readonly submitButton: Locator;
-    
-    readonly jobTitleError: Locator;
-    readonly phoneNumberError: Locator;
-    readonly commentsError: Locator;
-    
+    readonly errorMessage: Locator;
 
     //constructors
     constructor (page: Page) {
@@ -22,10 +18,7 @@ export class GetStartedPage {
         this.companyNameField = page.locator('.hs-form-iframe').first().contentFrame().getByRole('textbox', { name: 'Company name*' });
         this.emailField = page.locator('.hs-form-iframe').first().contentFrame().getByRole('textbox', { name: 'Email*' });
         this.submitButton = page.locator('.hs-form-iframe').first().contentFrame().getByRole('button', { name: 'SUBMIT' });
-        this.jobTitleError = page.locator('.hs-form-iframe').first().contentFrame().getByText('Please complete this required').first();
-        this.phoneNumberError = page.locator('.hs-form-iframe').first().contentFrame().getByText('Please complete this required').nth(1);
-        this.commentsError = page.locator('.hs-form-iframe').first().contentFrame().getByText('Please complete this required').nth(2);
-        
+        this.errorMessage = page.locator('.hs-form-iframe').first().contentFrame().getByText('Please complete this required');
     }
 
     //methods
@@ -54,17 +47,17 @@ export class GetStartedPage {
     }
 
     async verifyJobTitleErrorMessage ( errorMsg: string ) {
-        await expect(this.jobTitleError).toHaveText(errorMsg);
+        await expect(this.errorMessage.first()).toHaveText(errorMsg);
         return this;
     }
 
     async verifyPhoneNumberErrorMessage ( errorMsg: string ) {
-        await expect(this.phoneNumberError).toHaveText(errorMsg);
+        await expect(this.errorMessage.nth(1)).toHaveText(errorMsg);
         return this;
     }
 
     async verifyCommentsErrorMessage ( errorMsg: string) {
-        await expect(this.commentsError).toHaveText(errorMsg);
+        await expect(this.errorMessage.nth(2)).toHaveText(errorMsg);
         return this;
     }
 
